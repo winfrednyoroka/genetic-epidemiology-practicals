@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Put the current working directory path here:
+workdir="${HOME}/WholeGenomesPractical/"
+
+# Put the location of the geno_qc.[bed|bim|fam] files here:
+datadir="/panfs/panasas01/sscm/shortcourse/genetic.epidemiology/pract7_WholeGenomes/data/"
