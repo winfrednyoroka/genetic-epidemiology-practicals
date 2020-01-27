@@ -1,0 +1,76 @@
+
+R version 3.2.0 (2015-04-16) -- "Full of Ingredients"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-unknown-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(SKAT)
+> Generate_SSD_SetID("APOC3_maf0.01.bed", "APOC3_maf0.01.bim", "APOC3_maf0.01.fam", "APOC3_maf0.01.SetID", 
++ "APOC3_maf0.01.SSD", "APOC3_maf0.01.Info")
+
+Check duplicated SNPs in each SNP set
+No duplicate
+1867 Samples, 1 Sets, 2701 Total SNPs
+[1] "SSD and Info files are created!"
+> FAM<-read.table("APOC3.cov",header=T,stringsAsFactors=F,na.strings="NA")
+> 
+> ##############################################
+> # 	Open SSD, and Run SKAT
+> #
+> y<-FAM[,3]
+> # To use a SSD file, please open it first. 
+> # 
+> SSD.INFO<-Open_SSD("APOC3_maf0.01.SSD", "APOC3_maf0.01.Info")
+1867 Samples, 1 Sets, 2701 Total SNPs
+Open the SSD file
+> 
+> # Number of samples 
+> SSD.INFO$nSample 
+[1] 1867
+> 
+> # Number of Sets
+> SSD.INFO$nSets
+[1] 1
+> 
+> methods=c("davies","optimal.adj")
+> 
+> obj <- SKAT_Null_Model(y ~ 1, out_type = "C",n.Resampling=0, type.Resampling = "bootstrap")
+Warning message:
+370  samples have either missing phenotype or missing covariates. They are excluded from the analysis! 
+> 
+> SetID<-SSD.INFO$SetInfo$SetID
+> 	Z<-Get_Genotypes_SSD(SSD.INFO, 1)
+> 	
+> 	pvalues <- SetID
+> 	
+> 	for (m in 1:length(methods))
++ 	{
++ 		re <- SKAT(Z, obj, kernel = "linear.weighted", method=methods[m], estimate_MAF=2)
++ 		p.val1<-re$p.value
++ 		pvalues <- rbind(pvalues,p.val1)	
++ 	}
+Warning messages:
+1: 1162 SNPs with either high missing rates or no-variation are excluded! 
+2: 1162 SNPs with either high missing rates or no-variation are excluded! 
+> 	print(pvalues)
+        [,1]               
+pvalues "APOC3"            
+p.val1  "0.196630358832219"
+p.val1  "0.335033628109236"
+> 
+> proc.time()
+   user  system elapsed 
+ 86.131  46.601  24.384 
