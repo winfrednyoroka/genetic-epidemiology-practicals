@@ -1,0 +1,18 @@
+PLINK v1.90b3f 64-bit (2 Mar 2015) 
+5 arguments: --bfile geno_qc --freq --out geno_qc_freq
+Hostname: newblue4
+Working directory: /projects/MRC-IEU/research/data/ieu/teaching/short_courses/genetic_epidemiology/dev/release_candidate/data/pract3_GWAS/results
+Start time: Thu Mar 30 15:42:36 2017
+
+Random number seed: 1490884956
+129151 MB RAM detected; reserving 64575 MB for main workspace.
+Allocated 20431 MB successfully, after larger attempt(s) failed.
+463017 variants loaded from .bim file.
+8237 people (4218 males, 4019 females) loaded from .fam.
+Using 1 thread (no multithreaded calculations invoked).
+Before main variant filters, 8237 founders and 0 nonfounders present.
+Calculating allele frequencies... done.
+Total genotyping rate is 0.999999.
+--freq: Allele frequencies (founders only) written to geno_qc_freq.frq .
+
+End time: Thu Mar 30 15:44:11 2017
