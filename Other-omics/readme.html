@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>eQTL and meQTL practical in R</title>
+
+<script type="text/javascript">
+window.onload = function() {
+  var imgs = document.getElementsByTagName('img'), i, img;
+  for (i = 0; i < imgs.length; i++) {
+    img = imgs[i];
+    // center an image if it is the only element of its parent
+    if (img.parentElement.childElementCount === 1)
+      img.parentElement.style.textAlign = 'center';
+  }
+};
+</script>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: #990073
+   }
+
+   pre .number {
+     color: #099;
+   }
+
+   pre .comment {
+     color: #998;
+     font-style: italic
+   }
+
+   pre .keyword {
+     color: #900;
+     font-weight: bold
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: #d14;
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 13px;
+}
+
+body {
+  max-width: 800px;
+  margin: auto;
+  padding: 1em;
+  line-height: 20px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 {
+   font-size:2.2em;
+}
+
+h2 {
+   font-size:1.8em;
+}
+
+h3 {
+   font-size:1.4em;
+}
+
+h4 {
+   font-size:1.0em;
+}
+
+h5 {
+   font-size:0.9em;
+}
+
+h6 {
+   font-size:0.8em;
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre, img {
+  max-width: 100%;
+}
+pre {
+  overflow-x: auto;
+}
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code {
+  font-size: 92%;
+  border: 1px solid #ccc;
+}
+
+code[class] {
+  background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * {
+      background: transparent !important;
+      color: black !important;
+      filter:none !important;
+      -ms-filter: none !important;
+   }
+
+   body {
+      font-size:12pt;
+      max-width:100%;
+   }
+
+   a, a:visited {
+      text-decoration: underline;
+   }
+
+   hr {
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote {
+      padding-right: 1em;
+      page-break-inside: avoid;
+   }
+
+   tr, img {
+      page-break-inside: avoid;
+   }
+
+   img {
+      max-width: 100% !important;
+   }
+
+   @page :left {
+      margin: 15mm 20mm 15mm 10mm;
+   }
+
+   @page :right {
+      margin: 15mm 10mm 15mm 20mm;
+   }
+
+   p, h2, h3 {
+      orphans: 3; widows: 3;
+   }
+
+   h2, h3 {
+      page-break-after: avoid;
+   }
+}
+</style>
+
+
+
+</head>
+
+<body>
+<h1>eQTL and meQTL practical in R</h1>
+
+<p>Genetic Epidemiology Short Course<br>
+March 2020<br>
+<br>
+School of Social and Community Medicine<br>
+University of Bristol<br>
+<br>
+Created by Matthew Suderman<br>
+<a href="mailto:matthew.suderman@bristol.ac.uk">matthew.suderman@bristol.ac.uk</a></p>
+
+<hr/>
+
+<h2>Objectives</h2>
+
+<ol>
+<li>Prepare the data for analysis.<br></li>
+<li>Conduct an eQTL analysis.<br></li>
+<li>Produce plots to visually inspect findings.<br></li>
+<li>(Optional) Conduct an meQTL analysis.<br></li>
+<li>(Optional) Identify trios of associated genes, CpG sites and SNPs.</li>
+</ol>
+
+<h2>Preliminaries</h2>
+
+<p>Login to BlueCrystal and initiate an interactive session.</p>
+
+<p>Login to BlueCrystal and initiate an interactive session.</p>
+
+<pre><code>qsub -I -q teaching -l nodes=1:ppn=1,walltime=02:00:00
+</code></pre>
+
+<p>Change to the directory set up for this practical:</p>
+
+<pre><code>cd /panfs/panasas01/sscm/shortcourse/genetic.epidemiology/pract26_meqtl
+</code></pre>
+
+<p>You will <em>not</em> be able to save files here, so we will create an output directory in your home directory:</p>
+
+<pre><code>mkdir ~/pract26_output
+</code></pre>
+
+<h2>Data</h2>
+
+<p>In this practical we will run eQTL and meQTL analyses
+on a small publicly available dataset:</p>
+
+<blockquote>
+<p>Wagner, et al.
+<a href="http://www.ncbi.nlm.nih.gov/pubmed/24555846">The relationship between DNA methylation, genetic and expression inter-individual variation in untransformed human fibroblasts.</a>
+Genome Biol. 2014 Feb 20;15(2):R37.
+<a href="http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE53261">GEO link</a></p>
+</blockquote>
+
+<p>It includes:</p>
+
+<ul>
+<li>genotype (Illumina Human1M-Duov3 DNA Analysis BeadChip),</li>
+<li>DNA methylation (Illumina HumanMethylation450 BeadChip), and</li>
+<li>gene expression (Illumina HumanRef-8 v3.0 Expression Beadchip) profiles
+from 57 human skin fibroblast samples obtained from Coriell and McGill Cellbank.</li>
+</ul>
+
+<hr/>
+
+<h2>Analysis steps</h2>
+
+<ol>
+<li>Preprocessing.<br>
+a. Population stratification.<br>
+b. Gene expression outliers.<br>
+c. Matching samples between datasets.<br>
+d. Non-genetic variation removal.</li>
+<li>Software and data.<br>
+a. R package MatrixEQTL.<br>
+b. Genetic data.<br>
+c. Population stratification covariates.<br>
+d. Expression data.<br>
+e. Gene and SNP locations.</li>
+<li>eQTL analysis.</li>
+<li>Aftermath.<br>
+a. Number of associations.<br>
+b. Top associations.<br>
+c. Association plotting.</li>
+<li>(Optional) meQTL analysis.</li>
+<li>(Optional) Associated trios.</li>
+</ol>
+
+<hr/>
+
+<h2>1a. Preprocessing: Population stratification</h2>
+
+<p>This is detected by visualizing
+genetic distances between all pairs of individuals
+using multi-dimensional scaling (MDS).</p>
+
+<p>We will use PLINK for these computations
+(<a href="http://pngu.mgh.harvard.edu/%7Epurcell/plink/plink2.shtml">http://pngu.mgh.harvard.edu/~purcell/plink/plink2.shtml</a>).
+Please ensure that PLINK is installed before continuing.</p>
+
+<pre><code>module add apps/plink-1.90
+</code></pre>
+
+<p>Calculate genetic distances:</p>
+
+<pre><code>plink --bfile data/snp --genome --out ~/pract26_output/plink
+</code></pre>
+
+<p>The output <code>plink.genome</code> file in the current directory
+gives all pairwise distances (see the <code>DST</code> column).</p>
+
+<hr/>
+
+<h2>1a. Preprocessing: Population stratification in 2-dimensions</h2>
+
+<p>We represent these distances in two dimensions as follows:</p>
+
+<pre><code>plink --bfile data/snp --read-genome ~/pract26_output/plink.genome --cluster --mds-plot 2 --out ~/pract26_output/plink
+</code></pre>
+
+<p>This generates a file <code>plink.mds</code> that looks something like this:</p>
+
+<pre><code> FID       IID    SOL           C1           C2 
+   1   GM02704      0   0.00919443  -0.00202899 
+   2   GM02706      0   0.00508846 -0.000520485 
+   3   GM01650      0   0.00754305  0.000371449 
+   4   GM01653      0   0.00489205  -0.00105916 
+   5   GM02640      0   0.00624695 -0.000418025 
+   6   GM02641      0   0.00520069  -0.00199805 
+</code></pre>
+
+<p>FID - Family ID;<br>
+IID - Individual ID (or sample name);<br>
+SOL - Assigned solution code;<br>
+C1 - Position on first dimension;<br>
+C2 - Position on second dimension.</p>
+
+<hr/>
+
+<h2>1a. Preprocessing: Population stratification visually</h2>
+
+<p>Start <code>R</code>. First you&#39;ll need to load the module:</p>
+
+<pre><code>module add languages/R-3.2.0-ATLAS
+</code></pre>
+
+<p>To start R, simply type <code>R</code>.</p>
+
+<pre><code>R
+</code></pre>
+
+<p>We&#39;ll send outputs from R to the output directory we set up earlier.
+For convenience, we?ll save the location as a variable.</p>
+
+<pre><code class="r">out.dir &lt;- &quot;~/pract26_output&quot;
+</code></pre>
+
+<p>We now plot the coordinates in <code>plink.mds</code> in <code>R</code> as follows:</p>
+
+<pre><code class="r">snp.mds &lt;- read.table(file.path(out.dir, &quot;plink.mds&quot;), header=T, sep=&quot;&quot;, stringsAsFactors=F)
+plot(snp.mds[,&quot;C1&quot;], snp.mds[,&quot;C2&quot;], main=&quot;SNP MDS plot&quot;, xlab=&quot;first&quot;, ylab=&quot;second&quot;, pch=19)
+</code></pre>
+
+<blockquote>
+<p><em>Question</em>: Can you identify the two potential outlier samples in the plot?</p>
+</blockquote>
+
+<p>Answer:</p>
+
+<pre><code class="r">snp.mds[which(snp.mds[,&quot;C2&quot;] &gt; 0.06),]
+</code></pre>
+
+<pre><code>##    FID    IID SOL        C1       C2
+## 39  39 WG2120   0 -0.0336041 0.0728445
+## 40  40 WG2121   0 -0.0323253 0.0719037
+</code></pre>
+
+<p>Given how far these samples differ from the rest,
+we might actually consider removing them from the analysis.
+In this case, we&#39;ll attempt to adjust for these differences.</p>
+
+<hr/>
+
+<h2>1b. Preprocessing: Gene expression outliers</h2>
+
+<p>We could use a similar approach to identify gene expression outliers.</p>
+
+<pre><code class="r">rna &lt;- read.csv(&quot;data/rna-data.csv&quot;, row.names=1)
+rna.dist &lt;- 1-abs(cor(rna))
+rna.mds &lt;- cmdscale(rna.dist,eig=TRUE, k=2)
+plot(rna.mds$points[,1], rna.mds$points[,2],
+     main=&quot;RNA MDS plot&quot;, xlab=&quot;first&quot;, ylab=&quot;second&quot;, pch=19)
+</code></pre>
+
+<hr/>
+
+<h2>1c. Preprocessing: Matching samples between datasets</h2>
+
+<p>All too often samples are mislabelled in the lab.
+Fortunately, it is possible to computationally detect mismatches between
+genetic and gene expression data using MixupMapper:</p>
+
+<p><a href="http://genenetwork.nl/wordpress/mixupmapper/">http://genenetwork.nl/wordpress/mixupmapper/</a></p>
+
+<p>In this case, we will skip this step, assuming that the study authors
+haven&#39;t made such errors!</p>
+
+<p>It is possible to do the same for genetic and DNA methylation data,
+particularly for data generated using the Illumina HumanMethylation450 BeadChip.
+It actually measures a selection of SNPs in addition to the
+methylation levels.</p>
+
+<hr/>
+
+<h2>1d. Preprocessing: Non-genetic variation removal</h2>
+
+<p>Gene expression measurements can be influenced
+by factors other than genetic variation.
+To maximize power to detect associations between genes and genetic variants,
+we can remove all non-genetic variation from the gene expression data.
+To save time, we will not do that here. In case you&#39;re curious, here are the basic steps:</p>
+
+<ol>
+<li>Calculate the principal components of the gene expression data.</li>
+<li>Test associations between principal components and genetic variants.</li>
+<li>Remove any components with strong genetic associations.</li>
+<li>Remove variation of the remaining principal components from the gene expression data.</li>
+</ol>
+
+<hr/>
+
+<h2>2a. Software and data: R package MatrixEQTL</h2>
+
+<p>If <code>MatrixEQTL</code> has not already been installed, we install it as follows:</p>
+
+<pre><code class="r">source(&quot;http://bioconductor.org/biocLite.R&quot;)
+biocLite(&quot;MatrixEQTL&quot;)
+</code></pre>
+
+<p>We then load the library in R as follows:</p>
+
+<pre><code class="r">library(MatrixEQTL)
+</code></pre>
+
+<hr/>
+
+<h2>2b. Software and data: Genetic data</h2>
+
+<p>MatrixEQTL operates on <code>SlicedData</code> objects.
+These objects provide access to large datasets
+without using huge amounts of computer memory.</p>
+
+<p>The genetic data is contained in the file <code>data/snp-data.csv</code>.
+We load it as follows:</p>
+
+<pre><code class="r">snp.data &lt;- SlicedData$new()            ## create a new SlicedData object
+snp.data$fileDelimiter &lt;- &quot;,&quot;           ## columns in the file are separated by commas
+snp.data$fileOmitCharacters &lt;- &quot;NA&quot;     ## missing values are represented by &quot;NA&quot;
+snp.data$fileSkipRows &lt;- 1              ## the first column provides row names
+snp.data$fileSkipColumns &lt;- 1           ## the first row provides column names
+snp.data$fileSliceSize &lt;- 2000          ## only load the data 2000 rows at a time to save memory
+snp.data$LoadFile(&quot;data/snp-data.csv&quot;) 
+</code></pre>
+
+<p>Loading the data takes about half a minute.</p>
+
+<hr/>
+
+<h2>2c. Software and data: Population stratification covariates</h2>
+
+<p>When we test associations between genetic variants,
+we will need to adjust for population stratification.
+This is encoded by the multi-dimensional scaling coordinates
+that we created earlier.</p>
+
+<p>As required by <code>MatrixEQTL</code>,
+we load them as <code>SlicedData</code> objects:</p>
+
+<pre><code class="r">covariates.data &lt;- SlicedData$new()
+covariates.data$initialize(t(snp.mds[,c(&quot;C1&quot;,&quot;C2&quot;)]))
+</code></pre>
+
+<hr/>
+
+<h2>2d. Software and data: Expression data</h2>
+
+<p>Next we convert the gene expression data to <code>SlicedData</code> objects
+and verify that samples match the genotype data samples.</p>
+
+<pre><code class="r">rna.data &lt;- SlicedData$new()            ## create a new SlicedData object
+rna.data$fileDelimiter &lt;- &quot;,&quot;           ## columns in the file are separated by commas
+rna.data$fileOmitCharacters &lt;- &quot;NA&quot;     ## missing values are represented by &quot;NA&quot;
+rna.data$fileSkipRows &lt;- 1              ## the first column provides row names
+rna.data$fileSkipColumns &lt;- 1           ## the first row provides column names
+rna.data$fileSliceSize &lt;- 2000          ## only load the data 2000 rows at a time to save memory
+rna.data$LoadFile(&quot;data/rna-data.csv&quot;) 
+</code></pre>
+
+<p>Don&#39;t forget to make sure that the gene expression and genetic
+datasets have the samples in the same order!</p>
+
+<pre><code class="r">stopifnot(all(colnames(snp.data) == colnames(rna.data)))
+</code></pre>
+
+<hr/>
+
+<h2>2e. Software and data: Gene and SNP locations</h2>
+
+<blockquote>
+<p><em>Question</em>: If we tested associations between all SNP-gene pairs,
+how many tests would we have to perform?</p>
+</blockquote>
+
+<p>Answer:</p>
+
+<pre><code class="r">nrow(snp.data) * nrow(rna.data)
+</code></pre>
+
+<pre><code>## [1] 869593928
+</code></pre>
+
+<p>That&#39;s a lot of tests. To save time, we will only consider
+<em>cis</em> pairs (i.e. SNPs that are with 1 million bases of the gene).
+<code>MatrixEQTL</code> can do this for us if we provide
+SNP and gene locations in the genome:</p>
+
+<pre><code class="r">snp.loc &lt;- read.csv(&quot;data/snp-features.csv&quot;, row.names=1)
+rna.loc &lt;- read.csv(&quot;data/rna-features.csv&quot;, row.names=1)
+</code></pre>
+
+<hr/>
+
+<h2>3. eQTL analysis: p-value thresholds</h2>
+
+<blockquote>
+<p><em>Question</em>: <code>MatrixEQTL</code> requires a p-value threshold for significance.
+To adjust for the number of tests, we could divide 0.05 by the number of
+tests to be performed. Because we only test <em>cis</em> pairs, the exact
+number of difficult to estimate.
+Can you think of a simple lower bound and upper bound on the number of tests?</p>
+</blockquote>
+
+<p>Answer:</p>
+
+<pre><code class="r">lower.bound &lt;- nrow(snp.data)
+upper.bound &lt;- nrow(snp.data) * nrow(rna.data)
+</code></pre>
+
+<p>We&#39;ll use the lower bound to estimate a p-value threshold
+so that we don&#39;t miss any associations
+with statistically significant p-values.</p>
+
+<pre><code class="r">threshold &lt;- 0.05/lower.bound
+</code></pre>
+
+<hr/>
+
+<h2>3. eQTL analysis: finally!</h2>
+
+<p>Finally we are ready to run the eQTL analysis.</p>
+
+<pre><code class="r">eqtl &lt;- Matrix_eQTL_main(snps = snp.data,
+                         gene = rna.data,
+                         cvrt = covariates.data, ## population stratification
+                         pvOutputThreshold = 0, ## consider only cis pairs
+                         pvOutputThreshold.cis = threshold, 
+                         output_file_name.cis = file.path(out.dir, &quot;eqtl-cis.txt&quot;),
+                         snpspos = snp.loc, 
+                         genepos = rna.loc[,c(&quot;geneid&quot;,&quot;chr&quot;,&quot;left&quot;,&quot;right&quot;)],
+                         cisDist = 1e6, ## define cis as &lt; 1Mb
+                         useModel = modelLINEAR, ## test using linear models 
+                         verbose = TRUE,
+                         pvalue.hist = TRUE,
+                         min.pv.by.genesnp = FALSE,
+                         noFDRsaveMemory = FALSE)
+</code></pre>
+
+<p>This takes about 30 seconds.</p>
+
+<hr/>
+
+<h2>4a. Aftermath: Number of associations</h2>
+
+<p>Here is the exact number of tests that were performed:</p>
+
+<pre><code class="r">eqtl$cis$ntests
+</code></pre>
+
+<pre><code>## [1] 4863929
+</code></pre>
+
+<blockquote>
+<p><em>Question</em>: Above we guessed 1 test per SNP.
+How many tests were performed on average for each SNP?
+What p-value threshold should we apply given this number?</p>
+</blockquote>
+
+<p>Answer:</p>
+
+<pre><code class="r">eqtl$cis$ntests/nrow(snp.data)     ## number of tests per SNP
+</code></pre>
+
+<pre><code>## [1] 27.29
+</code></pre>
+
+<pre><code class="r">threshold &lt;- 0.05/eqtl$cis$ntests  ## correct p-value threshold
+</code></pre>
+
+<p>At this threshold (p &lt; 1.03e-08), we identify hundreds of
+associations.</p>
+
+<pre><code class="r">eqtls &lt;- eqtl$cis$eqtls
+eqtls &lt;- eqtls[which(eqtls$pvalue &lt; threshold),]
+nrow(eqtls)
+</code></pre>
+
+<pre><code>## [1] 468
+</code></pre>
+
+<blockquote>
+<p><em>Question</em>: How many eQTLs did we identify?</p>
+</blockquote>
+
+<p>Answer:</p>
+
+<pre><code class="r">length(unique(eqtls$snps))
+</code></pre>
+
+<pre><code>## [1] 403
+</code></pre>
+
+<hr/>
+
+<h2>4b. Aftermath: Top associations</h2>
+
+<p>We will plot the strongest association:</p>
+
+<pre><code class="r">idx &lt;- which.min(eqtls$pvalue)
+eqtls[idx,]
+</code></pre>
+
+<pre><code>##         snps         gene statistic       pvalue          FDR      beta
+## 1 rs17014489 ILMN_2100085  21.33979 1.096262e-27 8.063919e-22 0.4323303
+</code></pre>
+
+<p>We save the corresponding gene and SNP:</p>
+
+<pre><code class="r">top.gene &lt;- as.character(eqtls$gene[idx])
+top.snp &lt;- as.character(eqtls$snps[idx])
+top.gene
+</code></pre>
+
+<pre><code>## [1] &quot;ILMN_2100085&quot;
+</code></pre>
+
+<pre><code class="r">top.snp
+</code></pre>
+
+<pre><code>## [1] &quot;rs17014489&quot;
+</code></pre>
+
+<hr/>
+
+<h2>4c. Aftermath: Association plotting (data extraction)</h2>
+
+<p>To plot the association, we will need to extract the
+SNP and gene expression values for the pair.
+This can be a bit painful using <code>SlicedData</code> objects
+because they don&#39;t support direct access to individual
+rows or columns.
+Here we create our own function to do this.
+Don&#39;t worry about how it works, just copy and paste into R.</p>
+
+<pre><code class="r">sliced.data.row &lt;- function(object, row) {
+    if (is.factor(row))
+        row &lt;- as.character(row)
+    if (is.character(row)) {
+        row &lt;- which(rownames(object) == row)
+        if (length(row) == 0)
+            stop(&quot;Invalid row&quot;)
+    }
+    slice.size &lt;- nrow(object[[1]])
+    slice.idx &lt;- floor(row/slice.size) + 1
+    slice &lt;- object[[slice.idx]]
+    row &lt;- row - slice.size * (slice.idx - 1)
+    ret &lt;- slice[row,]
+    names(ret) &lt;- colnames(object)
+    ret             
+}
+</code></pre>
+
+<hr/>
+
+<h2>4c. Aftermath: Association plotting</h2>
+
+<p>We can use this function to obtain the genotypes for any given SNP.
+For example, below we extract data for the top SNP-gene pair.</p>
+
+<pre><code class="r">genotypes &lt;- sliced.data.row(snp.data, top.snp)
+genotypes &lt;- factor(genotypes, levels=0:2, labels=c(&quot;AA&quot;,&quot;AB&quot;,&quot;BB&quot;))
+expression.levels &lt;- sliced.data.row(rna.data, top.gene)
+</code></pre>
+
+<p>We plot their association as follows:</p>
+
+<pre><code class="r">boxplot(expression.levels ~ genotypes,
+        main=paste(top.snp,top.gene),
+        ylim=range(expression.levels),
+        outline=F)
+stripchart(expression.levels ~ genotypes,
+           method=&quot;jitter&quot;, add=TRUE, vertical=TRUE,
+           col=c(&quot;blue&quot;,&quot;orange&quot;,&quot;black&quot;, pch=19))
+</code></pre>
+
+<hr/>
+
+<h2>5. (Optional) meQTL analysis</h2>
+
+<pre><code class="r">cpg.data &lt;- SlicedData$new()
+cpg.data$fileDelimiter &lt;- &quot;,&quot;           ## columns are separated by commas
+cpg.data$fileOmitCharacters &lt;- &quot;NA&quot;     ## missing values are represented by &quot;NA&quot;
+cpg.data$fileSkipRows &lt;- 1              ## the first column provides row names
+cpg.data$fileSkipColumns &lt;- 1           ## the first row provides column names
+cpg.data$fileSliceSize &lt;- 2000          ## only load the data 2000 rows at a time
+cpg.data$LoadFile(&quot;data/cpg-data.csv&quot;) 
+
+cpg.loc &lt;- read.csv(&quot;data/cpg-features.csv&quot;, row.names=1)
+
+threshold &lt;- 0.05/nrow(snp.data)
+
+meqtl &lt;- Matrix_eQTL_main(snps = snp.data,
+                          gene = cpg.data,
+                          cvrt = covariates.data,
+                          pvOutputThreshold = 0,  ## ignore trans associations
+                          pvOutputThreshold.cis = threshold,
+                          output_file_name.cis = file.path(out.dir, &quot;meqtl-cis.txt&quot;),
+                          snpspos = snp.loc, 
+                          genepos = cpg.loc[,c(&quot;geneid&quot;,&quot;chr&quot;,&quot;left&quot;,&quot;right&quot;)],
+                          cisDist = 1e6,                  ## define cis as &lt; 1Mb
+                          useModel = modelLINEAR,
+                          verbose = TRUE,
+                          pvalue.hist = TRUE,
+                          min.pv.by.genesnp = FALSE,
+                          noFDRsaveMemory = FALSE)
+
+threshold &lt;- 0.05/meqtl$cis$ntests
+meqtls &lt;- meqtl$cis$eqtls
+meqtls &lt;- meqtls[which(meqtls$pvalue &lt; threshold),]
+</code></pre>
+
+<hr/>
+
+<h2>6. (Optional) Associated trios</h2>
+
+<p>Such trios are of interest because they could indicate cases where
+a SNP modifies methylation levels which in turn modify gene expression levels.</p>
+
+<p>Construct the trios:</p>
+
+<pre><code class="r">trios &lt;- merge(data.frame(snp=eqtls$snps, gene=eqtls$gene, eqtl.statistic=eqtls$statistic),
+               data.frame(snp=meqtls$snps, cpg=meqtls$gene, meqtl.statistic=meqtls$statistic))
+</code></pre>
+
+<p>There are 157 trios.</p>
+
+<p>Calculate p-values for each gene/CpG site association:</p>
+
+<pre><code class="r">trios$p.value &lt;- sapply(1:nrow(trios), function(i) {
+    expr &lt;- sliced.data.row(rna.data, trios$gene[i])
+    meth &lt;- sliced.data.row(cpg.data, trios$cpg[i])
+    cor.test(meth, expr)$p.value
+})
+</code></pre>
+
+<p>Identify the strongest gene/CpG site association.</p>
+
+<pre><code class="r">idx &lt;- which.min(trios$p.value)
+trios[idx,]
+</code></pre>
+
+<pre><code>##          snp         gene eqtl.statistic        cpg meqtl.statistic
+## 6 rs10220917 ILMN_1656045       8.606951 cg25118879       -12.20575
+##        p.value
+## 6 2.513491e-15
+</code></pre>
+
+</body>
+
+</html>
