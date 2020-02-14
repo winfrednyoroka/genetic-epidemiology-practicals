@@ -1,0 +1,43 @@
+PLINK v1.90b3f 64-bit (2 Mar 2015) 
+9 arguments: --bfile /panfs/panasas01/sscm/shortcourse/genetic.epidemiology/pract6_PolScore/data/ALSPAC_Clumped_SNPs --out /panfs/panasas01/sscm/hj15922/pract6_PolScore/pgc_scz_pol_scores --q-score-range /panfs/panasas01/sscm/shortcourse/genetic.epidemiology/pract6_PolScore/data/prs_thresholds.txt /panfs/panasas01/sscm/shortcourse/genetic.epidemiology/pract6_PolScore/data/effect_allele_pvalue.txt --score /panfs/panasas01/sscm/shortcourse/genetic.epidemiology/pract6_PolScore/data/effect_allele_weights.txt
+Hostname: node35-007
+Working directory: /panfs/panasas01/sscm/hj15922/pract6_PolScore
+Start time: Fri Jun  1 16:46:43 2018
+
+Random number seed: 1527868003
+64496 MB RAM detected; reserving 32248 MB for main workspace.
+180290 variants loaded from .bim file.
+2996 people (1485 males, 1511 females) loaded from .fam.
+Using 1 thread (no multithreaded calculations invoked).
+Before main variant filters, 2996 founders and 0 nonfounders present.
+Calculating allele frequencies... done.
+Total genotyping rate is 0.97345.
+180290 variants and 2996 people pass filters and QC.
+Note: No phenotypes present.
+/panfs/panasas01/sscm/hj15922/pract6_PolScore/pgc_scz_pol_scores.S1.profile
+written.
+/panfs/panasas01/sscm/hj15922/pract6_PolScore/pgc_scz_pol_scores.S2.profile
+written.
+/panfs/panasas01/sscm/hj15922/pract6_PolScore/pgc_scz_pol_scores.S3.profile
+written.
+/panfs/panasas01/sscm/hj15922/pract6_PolScore/pgc_scz_pol_scores.S4.profile
+written.
+/panfs/panasas01/sscm/hj15922/pract6_PolScore/pgc_scz_pol_scores.S5.profile
+written.
+/panfs/panasas01/sscm/hj15922/pract6_PolScore/pgc_scz_pol_scores.S6.profile
+written.
+/panfs/panasas01/sscm/hj15922/pract6_PolScore/pgc_scz_pol_scores.S7.profile
+written.
+/panfs/panasas01/sscm/hj15922/pract6_PolScore/pgc_scz_pol_scores.S8.profile
+written.
+/panfs/panasas01/sscm/hj15922/pract6_PolScore/pgc_scz_pol_scores.S9.profile
+written.
+/panfs/panasas01/sscm/hj15922/pract6_PolScore/pgc_scz_pol_scores.S10.profile
+written.
+/panfs/panasas01/sscm/hj15922/pract6_PolScore/pgc_scz_pol_scores.S11.profile
+written.
+/panfs/panasas01/sscm/hj15922/pract6_PolScore/pgc_scz_pol_scores.S12.profile
+written.
+--score: 12 ranges processed.
+
+End time: Fri Jun  1 16:46:51 2018
