@@ -527,7 +527,7 @@ boxplot(expression.levels ~ genotypes,
         outline=F)
 stripchart(expression.levels ~ genotypes,
            method="jitter", add=TRUE, vertical=TRUE,
-           col=c("blue","orange","black", pch=19))
+           col=c("blue","orange","black"), pch=19)
 ```
 
 
