@@ -3,12 +3,12 @@
 module load apps/plink2
 
 plink \
-	--bfile ../data/geno_unclean \
+	--bfile ${datadir}/geno_unclean \
 	--linear \
-	--pheno ../data/phen.txt \
+	--pheno ${datadir}/phen.txt \
 	--pheno-name BMI \
-	--covar ../data/covs.txt \
+	--covar ${datadir}/covs.txt \
 	--covar-name age sex \
-	--out ../output/bmi       
+	--out ~/genetic-epidemiology-practicals/GWAS/output/bmi       
 
-awk 'NR==1 || /ADD/' ../output/bmi.assoc.linear > ../output/bmi.assoc.linear.add
+awk 'NR==1 || /ADD/' ~/genetic-epidemiology-practicals/GWAS/output/bmi.assoc.linear > ~/genetic-epidemiology-practicals/GWAS/output/bmi.assoc.linear.add
