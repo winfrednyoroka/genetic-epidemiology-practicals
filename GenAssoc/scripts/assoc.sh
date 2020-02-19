@@ -4,12 +4,12 @@
 module load apps/plink2
 
 	plink \
-		--bfile ~/pract2_PopgenAssoc/data/chr16 \
+		--bfile ${datadir}/chr16 \
 		--snp rs3751812 \
 		--linear \
 		--ci 0.95 \
-		--pheno ~/pract2_PopgenAssoc/data/phen.txt \
+		--pheno ${datadir}/phen.txt \
 		--pheno-name ______ \
-		--covar ~/pract2_PopgenAssoc/data/covs.txt \
+		--covar ${datadir}/covs.txt \
 		--covar-name ______ \
-		--out ~/pract2_PopgenAssoc/output/rs3751812_BMI
+		--out ~/genetic-epidemiology-practicals/GenAssoc/output/rs3751812_BMI
