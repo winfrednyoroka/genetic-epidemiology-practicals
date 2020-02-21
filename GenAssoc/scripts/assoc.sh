@@ -2,6 +2,7 @@
 
 # any line that starts with # is a comment line
 module load apps/plink2
+datadir="/newshared/genetic.epidemiology/GenAssoc/data"
 
 	plink \
 		--bfile ${datadir}/chr16 \
@@ -9,7 +10,7 @@ module load apps/plink2
 		--linear \
 		--ci 0.95 \
 		--pheno ${datadir}/phen.txt \
-		--pheno-name ______ \
+		--pheno-name BMI \
 		--covar ${datadir}/covs.txt \
-		--covar-name ______ \
-		--out ~/genetic-epidemiology-practicals/GenAssoc/output/rs3751812_BMI
+		--covar-name sex,age \
+		--out ~/repo/genetic-epidemiology-practicals/GenAssoc/output/rs3751812_BMI
