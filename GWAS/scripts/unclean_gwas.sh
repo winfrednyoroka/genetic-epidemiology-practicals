@@ -1,7 +1,7 @@
 #!/bin/bash
 
 module load apps/plink2
-
+datadir="/newshared/genetic.epidemiology/GWAS/data"
 plink \
 	--bfile ${datadir}/geno_unclean \
 	--linear \
