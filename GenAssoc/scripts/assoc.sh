@@ -13,4 +13,4 @@ datadir="/newshared/genetic.epidemiology/GenAssoc/data"
 		--pheno-name BMI \
 		--covar ${datadir}/covs.txt \
 		--covar-name sex,age \
-		--out ~/repo/genetic-epidemiology-practicals/GenAssoc/output/rs3751812_BMI
+		--out ~/genetic-epidemiology-practicals/GenAssoc/output/rs3751812_BMI
