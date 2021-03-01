@@ -2,7 +2,7 @@
 # Step 4: Testing if polygenic scores are associated with phenotype 
 ################################################################################################################
 # Change your working directory (you may need to change the filepath in next line)
-setwd("E:/GenEpiSC_2020/17_PRS_PRACT/data")
+setwd("~/genetic-epidemiology-practicals/PolygenicScores/data")
 
 # removes anything already in memory
 rm(list=ls())
@@ -47,16 +47,16 @@ results<-glm(data$bmi ~ data[, paste0("stdSCORE_S",i)], na.action="na.exclude")
 data$pred <- predict(results)
 r2 <- cor(data$bmi,data$pred,use="complete.obs")^2
 
-all.results[i,1] <- thresh[j]						            	        #PRS
+all.results[i,1] <- thresh[j]						            	#PRS
 all.results[i,2] <- summary(results)$coefficients[2,1]				#beta
 all.results[i,3] <- summary(results)$coefficients[2,2]				#se
 all.results[i,4] <- summary(results)$coefficients[2,3]				#t
 all.results[i,5] <- summary(results)$coefficients[2,4]				#p
-all.results[i,6] <- all.results[i,2]-(1.96*all.results[i,3])	#lci
-all.results[i,7] <- all.results[i,2]+(1.96*all.results[i,3])	#uci
+all.results[i,6] <- all.results[i,2]-(1.96*all.results[i,3])		#lci
+all.results[i,7] <- all.results[i,2]+(1.96*all.results[i,3])		#uci
 all.results[i,8] <- r2				                                #r2
-all.results[i,9] <- nobs(results)								            	#N
-all.results[i,10] <- max(data[, paste0("CNT_S",i)])/2					#n_snps
+all.results[i,9] <- nobs(results)								    #N
+all.results[i,10] <- max(data[, paste0("CNT_S",i)])/2				#n_snps
 j=j+1
 }
 
@@ -64,10 +64,11 @@ j=j+1
 all.results
 
 # To visualise the r2 of across all association analyses use:
+jpeg(file="~/genetic-epidemiology-practicals/PolygenicScores/results/bmi_sczPRS_r2_plot.jpeg")
 barplot(all.results$r2, ylim=c(0,0.02), ylab="BMI ~ standardised PRS (r2)", col="lightblue",
         xlab="Schizophrenia PRS p value thresholds", names.arg = all.results$PRS,
         main="r2 values for associations between SCZ PRS and BMI \nacross multiple PRS thresholds")
-
+dev.off()
 
 # Note that you can also use ggplot to visualise association results across all PRS thresholds:
 # Install and load ggplot
@@ -85,3 +86,4 @@ ggplot(all.results, aes(x = PRS, y = beta)) +
   xlab("Schizophrenia PRS p value thresholds") + 
   ylab("Unit change in BMI per s.d. increase in schziophrenia PRS") +
   ggtitle("Associations between SCZ PRS and BMI across multiple PRS thresholds")
+ggsave("~/genetic-epidemiology-practicals/PolygenicScores/results/bmi_scz_associations.jpeg")
