@@ -47,16 +47,16 @@ results<-glm(data$bmi ~ data[, paste0("stdSCORE_S",i)], na.action="na.exclude")
 data$pred <- predict(results)
 r2 <- cor(data$bmi,data$pred,use="complete.obs")^2
 
-all.results[i,1] <- thresh[j]						            	#PRS
-all.results[i,2] <- summary(results)$coefficients[2,1]				#beta
-all.results[i,3] <- summary(results)$coefficients[2,2]				#se
-all.results[i,4] <- summary(results)$coefficients[2,3]				#t
-all.results[i,5] <- summary(results)$coefficients[2,4]				#p
-all.results[i,6] <- all.results[i,2]-(1.96*all.results[i,3])		#lci
-all.results[i,7] <- all.results[i,2]+(1.96*all.results[i,3])		#uci
-all.results[i,8] <- r2				                                #r2
-all.results[i,9] <- nobs(results)								    #N
-all.results[i,10] <- max(data[, paste0("CNT_S",i)])/2				#n_snps
+all.results[i,1] <- thresh[j]                                   #PRS
+all.results[i,2] <- summary(results)$coefficients[2,1]          #beta
+all.results[i,3] <- summary(results)$coefficients[2,2]          #se
+all.results[i,4] <- summary(results)$coefficients[2,3]          #t
+all.results[i,5] <- summary(results)$coefficients[2,4]          #p
+all.results[i,6] <- all.results[i,2]-(1.96*all.results[i,3])    #lci
+all.results[i,7] <- all.results[i,2]+(1.96*all.results[i,3])    #uci
+all.results[i,8] <- r2                                          #r2
+all.results[i,9] <- nobs(results)                               #N
+all.results[i,10] <- max(data[, paste0("CNT_S",i)])/2           #n_snps
 j=j+1
 }
 
