@@ -6,4 +6,4 @@ workdir="${HOME}/genetic-epidemiology-practicals/whole-genomes"
 
 # Put the location of the geno_qc.[bed|bim|fam] files here:
 #datadir="/panfs/panasas01/sscm/shortcourse/genetic.epidemiology/pract7_WholeGenomes/data/"
-datadir="/newshared/genetic.epidemiology/WholeGenomes"
+datadir="/newshared/genetic.epidemiology/WholeGenomes/data/"
