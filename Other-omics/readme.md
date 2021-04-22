@@ -1,17 +1,11 @@
 # eQTL and meQTL practical in R
 
-Genetic Epidemiology Short Course
-
 May 2021
-
-School of Social and Community Medicine
-
-University of Bristol
 
 Created by Matthew Suderman
 [matthew.suderman@bristol.ac.uk](mailto:matthew.suderman@bristol.ac.uk)
 
----
+* * * 
 
 ## Objectives
 
@@ -20,6 +14,8 @@ Created by Matthew Suderman
 3. Produce plots to visually inspect findings.<br>
 4. (Optional) Conduct an meQTL analysis.<br>
 5. (Optional) Identify trios of associated genes, CpG sites and SNPs.
+
+* * * 
 
 ## Preliminaries
 
