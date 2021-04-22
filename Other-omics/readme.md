@@ -21,21 +21,31 @@ Created by Matthew Suderman<br>
 
 ## Preliminaries
 
-Login to BlueCrystal and initiate an interactive session.
+Login to BlueCrystal using PuTTY. 
 
-Login to BlueCrystal and initiate an interactive session.
+Run the following command to access a compute node:
 ```
 qsub -I -q teaching -l nodes=1:ppn=1,walltime=02:00:00
 ```
-Change to the directory set up for this practical:
+
+All of the files for this practical
+are included with the GitHub repository that you have already cloned.
+
+Change to the directory in the repository set up for this practical:
 ```
-cd /panfs/panasas01/sscm/shortcourse/genetic.epidemiology/pract26_meqtl
+cd ~/genetic-epidemiology-practicals/Other-omics
 ```
 
-You will *not* be able to save files here, so we will create an output directory in your home directory:
+It is good practice to save outputs to another directory
+so that it is easy to distinguish output files
+from other types of files such as 
+data, script or documentation files.
+We create the output directory as follows:
 ```
-mkdir ~/pract26_output
+mkdir output
 ```
+
+---
 
 ## Data
 
@@ -52,8 +62,6 @@ It includes:
 - DNA methylation (Illumina HumanMethylation450 BeadChip), and
 - gene expression (Illumina HumanRef-8 v3.0 Expression Beadchip) profiles
 from 57 human skin fibroblast samples obtained from Coriell and McGill Cellbank.
-
-
 
 ---
 
@@ -86,20 +94,25 @@ This is detected by visualizing
 genetic distances between all pairs of individuals
 using multi-dimensional scaling (MDS).
 
-We will use PLINK for these computations
-(http://pngu.mgh.harvard.edu/~purcell/plink/plink2.shtml).
+We will use PLINK for these computations.
 Please ensure that PLINK is installed before continuing.
 ```
-module add apps/plink-1.90
+module add apps/plink2
 ```
 
 Calculate genetic distances:
 ```
-plink --bfile data/snp --genome --out ~/pract26_output/plink
+plink --bfile data/snp --genome --out output/plink
 ```
 
-The output `plink.genome` file in the current directory
+The output `output/plink.genome` file in the current directory
 gives all pairwise distances (see the `DST` column).
+
+You can type the following command to see the first few lines
+in the file:
+```
+head output/plink.genome
+```
 
 ---
 
@@ -107,18 +120,18 @@ gives all pairwise distances (see the `DST` column).
 
 We represent these distances in two dimensions as follows:
 ```
-plink --bfile data/snp --read-genome ~/pract26_output/plink.genome --cluster --mds-plot 2 --out ~/pract26_output/plink
+plink --bfile data/snp --read-genome output/plink.genome --cluster --mds-plot 2 --out output/plink
 ```
 
-This generates a file `plink.mds` that looks something like this:
+This generates a file `output/plink.mds` that looks something like this:
 ```
  FID       IID    SOL           C1           C2 
-   1   GM02704      0   0.00919443  -0.00202899 
-   2   GM02706      0   0.00508846 -0.000520485 
-   3   GM01650      0   0.00754305  0.000371449 
-   4   GM01653      0   0.00489205  -0.00105916 
-   5   GM02640      0   0.00624695 -0.000418025 
-   6   GM02641      0   0.00520069  -0.00199805 
+   1   GM02704      0  -0.00860421   -0.0114082 
+   2   GM02706      0   -0.0145491    0.0005202 
+   3   GM01650      0  -0.00431194  -0.00171059 
+   4   GM01653      0  -0.00306369  -0.00175129 
+   5   GM02640      0   -0.0035343  -0.00811608 
+   6   GM02641      0  -0.00876442  -0.00616735 
 ```
 
 FID - Family ID;<br>
@@ -133,7 +146,7 @@ C2 - Position on second dimension.
 
 Start `R`. First you'll need to load the module:
 ```
-module add languages/R-3.2.0-ATLAS
+module add languages/R-3.6.2-gcc9.1.0
 ```
 
 To start R, simply type `R`.
@@ -144,14 +157,16 @@ R
 We'll send outputs from R to the output directory we set up earlier.
 For convenience, we?ll save the location as a variable.
 ```r
-out.dir <- "~/pract26_output"
+out.dir <- "output"
 ```
 
-We now plot the coordinates in `plink.mds` in `R` as follows:
+We now plot the coordinates in `output/plink.mds` in `R` as follows:
 
 ```r
 snp.mds <- read.table(file.path(out.dir, "plink.mds"), header=T, sep="", stringsAsFactors=F)
+pdf(file.path(out.dir, "mds.pdf"))
 plot(snp.mds[,"C1"], snp.mds[,"C2"], main="SNP MDS plot", xlab="first", ylab="second", pch=19)
+dev.off()
 ```
 
 > *Question*: Can you identify the two potential outlier samples in the plot?
@@ -159,13 +174,15 @@ plot(snp.mds[,"C1"], snp.mds[,"C2"], main="SNP MDS plot", xlab="first", ylab="se
 Answer:
 
 ```r
-snp.mds[which(snp.mds[,"C2"] > 0.06),]
+snp.mds[which(snp.mds[,"C1"] > 0.06 | snp.mds[,"C2"] > 0.06),]
 ```
 
 ```
-##    FID    IID SOL        C1       C2
-## 39  39 WG2120   0 -0.0336041 0.0728445
-## 40  40 WG2121   0 -0.0323253 0.0719037
+   FID    IID SOL         C1        C2
+39  39 WG2120   0 -0.0336041 0.0728445
+40  40 WG2121   0 -0.0323253 0.0719037
+43  43 WG1977   0  0.0725762 0.0344586
+44  44 WG1978   0  0.0713593 0.0332588
 ```
 
 Given how far these samples differ from the rest,
@@ -182,10 +199,11 @@ We could use a similar approach to identify gene expression outliers.
 rna <- read.csv("data/rna-data.csv", row.names=1)
 rna.dist <- 1-abs(cor(rna))
 rna.mds <- cmdscale(rna.dist,eig=TRUE, k=2)
+pdf(file.path(out.dir, "mds-rna.pdf"))
 plot(rna.mds$points[,1], rna.mds$points[,2],
      main="RNA MDS plot", xlab="first", ylab="second", pch=19)
+dev.off()
 ```
-
 
 ---
 
@@ -227,9 +245,10 @@ To save time, we will not do that here. In case you're curious, here are the bas
 If `MatrixEQTL` has not already been installed, we install it as follows:
 
 ```r
-source("http://bioconductor.org/biocLite.R")
-biocLite("MatrixEQTL")
+BiocManager::install("MatrixEQTL")
+# Respond by typing 'yes' to any questions.
 ```
+
 
 We then load the library in R as follows:
 
@@ -404,7 +423,7 @@ eqtl$cis$ntests/nrow(snp.data)     ## number of tests per SNP
 ```
 
 ```
-## [1] 27.29
+## [1] 27.28987
 ```
 
 ```r
@@ -448,8 +467,8 @@ eqtls[idx,]
 ```
 
 ```
-##         snps         gene statistic       pvalue          FDR      beta
-## 1 rs17014489 ILMN_2100085  21.33979 1.096262e-27 8.063919e-22 0.4323303
+##        snps         gene statistic       pvalue          FDR       beta
+## 1 rs1025996 ILMN_2100085 -21.33979 1.096262e-27 8.063919e-22 -0.4323303
 ```
 
 We save the corresponding gene and SNP:
@@ -469,7 +488,7 @@ top.snp
 ```
 
 ```
-## [1] "rs17014489"
+## [1] "rs1025996"
 ```
 
 ---
@@ -521,6 +540,7 @@ We plot their association as follows:
 
 
 ```r
+pdf(file.path(out.dir, "top-snp-gene.pdf"))
 boxplot(expression.levels ~ genotypes,
         main=paste(top.snp,top.gene),
         ylim=range(expression.levels),
@@ -528,6 +548,7 @@ boxplot(expression.levels ~ genotypes,
 stripchart(expression.levels ~ genotypes,
            method="jitter", add=TRUE, vertical=TRUE,
            col=c("blue","orange","black"), pch=19)
+dev.off()
 ```
 
 
@@ -583,7 +604,7 @@ trios <- merge(data.frame(snp=eqtls$snps, gene=eqtls$gene, eqtl.statistic=eqtls$
                data.frame(snp=meqtls$snps, cpg=meqtls$gene, meqtl.statistic=meqtls$statistic))
 ```
 
-There are 157 trios.
+There are 168 trios.
 
 Calculate p-values for each gene/CpG site association:
 
@@ -604,8 +625,8 @@ trios[idx,]
 
 ```
 ##          snp         gene eqtl.statistic        cpg meqtl.statistic
-## 6 rs10220917 ILMN_1656045       8.606951 cg25118879       -12.20575
+## 5 rs10220917 ILMN_1656045       9.664163 cg25118879       -13.50116
 ##        p.value
-## 6 2.513491e-15
+## 5 2.513491e-15
 ```
 
