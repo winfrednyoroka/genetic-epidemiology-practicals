@@ -1,12 +1,14 @@
 # eQTL and meQTL practical in R
 
-Genetic Epidemiology Short Course<br>
-March 2020<br>
-<br>
-School of Social and Community Medicine<br>
-University of Bristol<br>
-<br>
-Created by Matthew Suderman<br>
+Genetic Epidemiology Short Course
+
+May 2021
+
+School of Social and Community Medicine
+
+University of Bristol
+
+Created by Matthew Suderman
 [matthew.suderman@bristol.ac.uk](mailto:matthew.suderman@bristol.ac.uk)
 
 ---
