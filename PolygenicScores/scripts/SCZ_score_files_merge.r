@@ -1,5 +1,5 @@
 # Change your working directory (you may need to change the filepath in next line)
-setwd("E:/GenEpiSC_2020/17_PRS_PRACT/data")
+setwd("~/genetic-epidemiology-practicals/PolygenicScores/data")
 
 # Remove everything in R workspace
 rm(list=ls())
@@ -32,7 +32,7 @@ rm(d,d1)
 # create dataframe list
 df.list <-list(S1,S2,S3,S4,S5,S6,S7,S8,S9,S10,S11,S12,outcomeData)
 
-# merge the datafreames together on the common "id" column
+# merge the dataframes together on the common "id" column
 data <- Reduce(function(x, y) merge(x, y, all=T, by="id"), df.list, accumulate=F)
 
 # save the merged PRS and outcome dataset
