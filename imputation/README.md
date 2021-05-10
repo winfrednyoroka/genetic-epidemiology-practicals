@@ -11,7 +11,7 @@ output:
 
 All the material for this practical is available here:
 
-[https://github.com/explodecomputer/ImputationPractical](https://github.com/explodecomputer/ImputationPractical)
+https://github.com/MRCIEU/genetic-epidemiology-practicals/tree/master/imputation
 
 In this practical we will 
 
@@ -22,35 +22,35 @@ In this practical we will
 
 * * *
 
-### Materials
-
-The scripts for this practical are on GitHub, and the data is located on the bluecrystal server.
-
-Let's download the scripts first
-
-```
-module add tools/git-2.18.0
-git clone https://github.com/explodecomputer/ImputationPractical.git
-```
-
-Navigate to the newly created directory
-
-```
-cd ImputationPractical
-```
-
-Now let's setup an alias to the data directory:
-
-```
-datadir="/panfs/panasas01/sscm/shortcourse/genetic.epidemiology/pract4_Imputation/data"
-```
-
 ### Logging in to the server
 
 Log into bluecrystal using PuTTY. Run the following command to access a compute node:
 
 ```
 qsub -I -q teaching -l nodes=1:ppn=1,walltime=02:00:00
+```
+
+### Materials
+
+The scripts for this practical are on GitHub, and the data is located on the bluecrystal server in a shared directory.
+
+Let's download the scripts first
+
+```
+module add tools/git-2.18.0
+git clone https://github.com/MRCIEU/genetic-epidemiology-practicals.git
+```
+
+Navigate to the newly created directory
+
+```
+cd genetic-epidemiology-practicals/imputation
+```
+
+Now let's setup an alias to the data directory:
+
+```
+datadir="/newshared/genetic.epidemiology/Imputation/data"
 ```
 
 
@@ -62,6 +62,7 @@ qsub -I -q teaching -l nodes=1:ppn=1,walltime=02:00:00
     
     - [Michigan server](https://imputationserver.sph.umich.edu/index.html)
     - [Sanger server](https://imputation.sanger.ac.uk/)
+    - [TOPMED server](https://imputation.biodatacatalyst.nhlbi.nih.gov)
 
 1. As discussed in the lecture, imputation data is **probabilistic**. There are several formats, and we will look at two. First is known as Oxford format (aka gen format). It presents the genotype data in dosages. Specifically, for each individual there are 3 columns, each representing genotype probability.
 
@@ -89,7 +90,7 @@ qsub -I -q teaching -l nodes=1:ppn=1,walltime=02:00:00
     module add apps/qctool-2.0.1
     qctool_v2.0.1 \
     -g ${datadir}/data_chr16.gen.gz \
-    -snp-stats output/data_chr16.snp-stats
+    -snp-stats -osnp output/data_chr16.snp-stats
 
     # Compress the output
     gzip -f output/data_chr16.snp-stats
@@ -111,7 +112,7 @@ qsub -I -q teaching -l nodes=1:ppn=1,walltime=02:00:00
 
     Open up WinSCP (from the Start menu), and connect using the same credentials as you have used in Putty. Once connected you should be able to navigate to the folder `ImputationPractical/`
 
-4. We can also look at another format - VCF (variant call format). This is emerging as a much more popular format, and is currently generated as output by both Sanger and Michigan imputation servers. The software to use for this format is [vcftools](http://vcftools.sourceforge.net/documentation.html) or [bcftools](https://samtools.github.io/bcftools/).
+4. We can also look at another format - VCF (variant call format). This is emerging as a much more popular format, and is currently generated as output by all imputation servers. The software to use for this format is [vcftools](http://vcftools.sourceforge.net/documentation.html) or [bcftools](https://samtools.github.io/bcftools/).
     
     ```
     zless -S ${datadir}/data_chr16.vcf.gz
