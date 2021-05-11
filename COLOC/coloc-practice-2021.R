@@ -24,8 +24,16 @@
 
 
 ##install and call packages
+
+if (!requireNamespace("BiocManager", quietly = TRUE))
+  install.packages("BiocManager")
+
+BiocManager::install("snpStats")
+
+
 #install.packages("coloc")
-#devtools::install_github("chr1swallace/coloc")
+#devtools::install_github("chr1swallace/coloc") #alternative approach
+
 library(coloc)
 #library(ggplot2)
 rm(list=ls(all=TRUE)) 
