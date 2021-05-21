@@ -11,4 +11,3 @@ plink \
 	--score effect_allele_weights.txt \
 	--q-score-range prs_thresholds.txt effect_allele_pvalue.txt \
 	--out pgc_scz_pol_scores
-     
