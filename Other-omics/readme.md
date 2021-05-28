@@ -167,7 +167,7 @@ plot(snp.mds[,"C1"], snp.mds[,"C2"], main="SNP MDS plot", xlab="first", ylab="se
 dev.off()
 ```
 
-> *Question*: Can you identify the two potential outlier samples in the plot?
+> *Question*: Can you identify the four potential outlier samples in the plot?
 
 Answer:
 
