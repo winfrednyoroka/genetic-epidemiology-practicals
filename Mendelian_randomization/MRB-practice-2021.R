@@ -2,9 +2,6 @@ rm(list=ls())
 setwd("~/MR-practice/")
 
 # Packages needed for this practical 
-install.packages("devtools")
-library(devtools)
-
 install.packages("plyr")
 install.packages("ggplot2")
 
