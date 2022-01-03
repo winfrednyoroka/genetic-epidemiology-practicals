@@ -1,16 +1,18 @@
 #!/bin/bash
 
 # any line that starts with # is a comment line
-module load apps/plink2
-datadir="/newshared/genetic.epidemiology/GenAssoc/data"
+# 03.01.22 Updated for BC4 by R. Granell
+
+module add apps/plink/2.00
+datadir="/mnt/storage/private/mrcieu/training/genetic_epidemiology/GenAssoc/data"
 
 	plink \
 		--bfile ${datadir}/chr16 \
 		--snp rs3751812 \
-		--linear \
+		--glm no-x-sex \
 		--ci 0.95 \
 		--pheno ${datadir}/phen.txt \
 		--pheno-name BMI \
 		--covar ${datadir}/covs.txt \
 		--covar-name sex,age \
-		--out ~/genetic-epidemiology-practicals/GenAssoc/output/rs3751812_BMI
+		--out ~/scratch/genetic-epidemiology-practicals/GenAssoc/output/rs3751812_BMI

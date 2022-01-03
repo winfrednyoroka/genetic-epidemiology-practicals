@@ -1,7 +1,10 @@
 #!/bin/bash
 
-module load apps/plink2
-datadir="/newshared/genetic.epidemiology/GWAS/data"
+# 03.01.22 Updated for BC4 by R. Granell
+# Uses PLINK2
+
+module add apps/plink/2.00
+datadir="/mnt/storage/private/mrcieu/training/genetic_epidemiology/GWAS/data"
 
 plink \
  	--bfile ${datadir}/geno_unclean \
@@ -10,5 +13,5 @@ plink \
  	--geno 0.05 \
  	--mind 0.05 \
  	--make-bed \
- 	--out ~/genetic-epidemiology-practicals/GWAS/data/geno_qc
+ 	--out ~/scratch/genetic-epidemiology-practicals/GWAS/data/geno_qc
 

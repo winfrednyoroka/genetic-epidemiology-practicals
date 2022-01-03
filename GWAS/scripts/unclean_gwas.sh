@@ -1,15 +1,18 @@
 #!/bin/bash
 
-module load apps/plink2
-datadir="/newshared/genetic.epidemiology/GWAS/data"
+# 03.01.22 Updated for BC4 by R. Granell
+# Uses PLINK2
+
+module add apps/plink/2.00
+datadir="/mnt/storage/private/mrcieu/training/genetic_epidemiology/GWAS/data"
 
 plink \
         --bfile ${datadir}/geno_unclean \
-        --linear \
+        --glm no-x-sex \
         --pheno ${datadir}/phen.txt \
         --pheno-name BMI \
         --covar ${datadir}/covs.txt \
         --covar-name age sex \
-        --out ~/genetic-epidemiology-practicals/GWAS/output/bmi
+        --out ~/scratch/genetic-epidemiology-practicals/GWAS/output/bmi
 
-awk 'NR==1 || /ADD/' ~/genetic-epidemiology-practicals/GWAS/output/bmi.assoc.linear > ~/genetic-epidemiology-practicals/GWAS/output/bmi.assoc.linear.add
+awk 'NR==1 || /ADD/' ~/scratch/genetic-epidemiology-practicals/GWAS/output/bmi.BMI.glm.linear > ~/scratch/genetic-epidemiology-practicals/GWAS/output/bmi.BMI.glm.linear.add
