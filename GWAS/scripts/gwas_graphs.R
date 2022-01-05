@@ -38,8 +38,9 @@ cat("\n\nReading", infile, "\n")
 # plink2 glm has produced an
 # input file with  a heading row that starts with #. we need to remove this 
 # also name of chromosome column is now CHROM
-a <- read.table(infile, he=T)
-a$CHROM <- as.numeric(a$CHROM)
+a <- read.table(infile, header=T, stringsAsFactors=F)
+a<-na.omit(a)
+a$CHR <- as.numeric(a$CHR)
 a <- subset(a, P != 0)
 
 
@@ -51,18 +52,21 @@ manhattanfilename <- paste(outfile, "_manhattan.png", sep="")
 pvalue <- a$P
 chisq <- qchisq(1-pvalue,1)
 lambda = median(chisq)/qchisq(0.5,1)
+lambda
 
 cat("Making", qqfilename, "\n")
 #QQ-plot
 png(file=qqfilename)
 #Add lambda in the tittle
-qq(a$P, main=paste(basename(outfile), "QQ-plot lambda=",lambda))
+#qq(a$P, main=paste(basename(outfile), "QQ-plot lambda=",lambda))
+qq(a$P, main=paste(basename(outfile), "QQ-plot lambda="))
+#qq(a$P)
 dev.off()
-
+exit
 cat("Making", manhattanfilename, "\n")
 #Manhattan plot
 png(file=manhattanfilename)
-manhattan(a, main=paste(basename(outfile), "Manhattan plot"))
+manhattan(a,snp= "RSID", chr="CHR", bp="BP", p="p", main=paste(basename(outfile), "Manhattan plot"))
 dev.off()
 
 

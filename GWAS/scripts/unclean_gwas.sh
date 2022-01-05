@@ -5,6 +5,7 @@
 
 module add apps/plink/2.00
 datadir="/mnt/storage/private/mrcieu/training/genetic_epidemiology/GWAS/data"
+outdir="$HOME/scratch/genetic-epidemiology-practicals/GWAS/output"
 
 plink \
         --bfile ${datadir}/geno_unclean \
@@ -13,6 +14,6 @@ plink \
         --pheno-name BMI \
         --covar ${datadir}/covs.txt \
         --covar-name age sex \
-        --out ~/scratch/genetic-epidemiology-practicals/GWAS/output/bmi
+        --out ${outdir}/bmi
 
-awk 'NR==1 || /ADD/' ~/scratch/genetic-epidemiology-practicals/GWAS/output/bmi.BMI.glm.linear > ~/scratch/genetic-epidemiology-practicals/GWAS/output/bmi.BMI.glm.linear.add
+awk 'NR==1 || /ADD/' ${outdir}/bmi.BMI.glm.linear | sed 's/^#CHROM/CHR/' | sed 's/POS/BP/' | sed 's/ID/SNP/'  > ${outdir}/bmi.BMI.glm.linear.add
