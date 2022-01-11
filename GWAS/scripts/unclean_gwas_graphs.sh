@@ -12,7 +12,8 @@ module add languages/r/4.0.3
 # Here we use the gwas_graphs.R script to generate Q-Q and Manhattan plots
 # We pass to R the GWAS results file and the filename for the graphs to be saved to
 
+workdir="$HOME/scratch/genetic-epidemiology-practicals/GWAS/scripts"
 outdir="$HOME/scratch/genetic-epidemiology-practicals/GWAS/output"
 
-xvfb-run --server-args="-screen 0 1024x768x24" Rscript gwas_graphs.R ${outdir}/bmi.BMI.glm.linear.add ${outdir}/bmi_unclean
-#Rscript gwas_graphs.R ${outdir}/bmi.BMI.glm.linear.add ${outdir}/bmi_unclean
+#xvfb-run --server-args="-screen 0 1024x768x24" Rscript gwas_graphs.R ${outdir}/bmi.BMI.glm.linear.add ${outdir}/bmi_unclean
+Rscript ${workdir}/gwas_graphs.R ${outdir}/bmi.BMI.glm.linear.add ${outdir}/bmi_unclean

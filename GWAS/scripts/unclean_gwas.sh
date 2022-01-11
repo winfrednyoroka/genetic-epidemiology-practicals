@@ -16,4 +16,4 @@ plink \
         --covar-name age sex \
         --out ${outdir}/bmi
 
-awk 'NR==1 || /ADD/' ${outdir}/bmi.BMI.glm.linear | sed 's/^#CHROM/CHR/' | sed 's/POS/BP/' | sed 's/ID/SNP/'  > ${outdir}/bmi.BMI.glm.linear.add
+awk 'NR==1 || /ADD/' ${outdir}/bmi.BMI.glm.linear | sed 's/^#CHROM/CHROM/'   > ${outdir}/bmi.BMI.glm.linear.add
