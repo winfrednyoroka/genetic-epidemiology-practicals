@@ -16,4 +16,5 @@ plink \
         --covar-name age sex \
         --out ${outdir}/bmi
 
+#This command extracts the rows from the ADDITIVE model
 awk 'NR==1 || /ADD/' ${outdir}/bmi.BMI.glm.linear | sed 's/^#CHROM/CHROM/'   > ${outdir}/bmi.BMI.glm.linear.add

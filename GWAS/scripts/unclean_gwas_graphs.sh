@@ -1,10 +1,12 @@
 #!/bin/bash
 #run --nodes=1 --ntasks-per-node=14 --time=12:00:00 --mem=50gb --pty bash -i
+#SBATCH --x11
 
 #export R_LIBS="~/R_libs"
 #mkdir ~/R_libs
 
-module add languages/r/4.0.3
+#module add languages/r/4.0.3
+module add languages/r/4.1.0
 #module add X11/20171023-GCCcore-6.4.0
 #module load X11/20171023-GCCcore-6.4.0
 

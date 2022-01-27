@@ -1,10 +1,11 @@
 #!/bin/bash
 
 # any line that starts with # is a comment line
-# 03.01.22 Updated for BC4 by R. Granell
+# 27.01.22 Updated for BC4 by R. Granell
 
 module add apps/plink/2.00
 datadir="/mnt/storage/private/mrcieu/training/genetic_epidemiology/GenAssoc/data"
+outdir="$HOME/scratch/genetic-epidemiology-practicals/GenAssoc/output"
 
 	plink \
 		--bfile ${datadir}/chr16 \
@@ -12,7 +13,8 @@ datadir="/mnt/storage/private/mrcieu/training/genetic_epidemiology/GenAssoc/data
 		--glm no-x-sex \
 		--ci 0.95 \
 		--pheno ${datadir}/phen.txt \
-		--pheno-name BMI \
+		--pheno-name ______ \
 		--covar ${datadir}/covs.txt \
-		--covar-name sex,age \
-		--out ~/scratch/genetic-epidemiology-practicals/GenAssoc/output/rs3751812_BMI
+		--covar-name ________ \
+		--out ${outdir}/_________
+exit
