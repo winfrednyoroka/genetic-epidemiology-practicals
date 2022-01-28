@@ -19,6 +19,7 @@ cat("\n\nReading", infile, "\n")
 # plink2 glm has produced an
 # input file with  a heading row that starts with #. we need to remove this 
 # also name of chromosome column is now CHROM
+
 a <- read.table(infile, header=T, stringsAsFactors=F)
 #a<-na.omit(a)
 a$CHROM<-gsub("X",23,a$CHROM)

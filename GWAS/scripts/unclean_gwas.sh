@@ -14,7 +14,7 @@ plink \
         --pheno-name BMI \
         --covar ${datadir}/covs.txt \
         --covar-name age sex \
-        --out ${outdir}/bmi
+        --out ${outdir}/unclean
 
 #This command extracts the rows from the ADDITIVE model
-awk 'NR==1 || /ADD/' ${outdir}/bmi.BMI.glm.linear | sed 's/^#CHROM/CHROM/'   > ${outdir}/bmi.BMI.glm.linear.add
+awk 'NR==1 || /ADD/' ${outdir}/unclean.BMI.glm.linear | sed 's/^#CHROM/CHROM/'   > ${outdir}/unclean.BMI.glm.linear.add
