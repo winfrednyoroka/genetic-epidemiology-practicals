@@ -1,0 +1,24 @@
+PLINK v2.00a1LM 64-bit Intel (24 Jan 2018)
+Options in effect:
+  --bfile /mnt/storage/private/mrcieu/training/genetic_epidemiology/GenAssoc/data//chr16
+  --hardy
+  --out /user/home/mdxrg/scratch/genetic-epidemiology-practicals/GenAssoc/output/chr16_hwe
+
+Hostname: bc4login2.bc4.acrc.priv
+Working directory: /mnt/storage/scratch/mdxrg/genetic-epidemiology-practicals/GenAssoc/scripts
+Start time: Fri Jan 28 13:08:47 2022
+
+Random number seed: 1643375327
+256956 MB RAM detected; reserving 128478 MB for main workspace.
+Using up to 28 threads (change this with --threads).
+8237 samples (4019 females, 4218 males; 8237 founders) loaded from
+/mnt/storage/private/mrcieu/training/genetic_epidemiology/GenAssoc/data//chr16.fam.
+14213 variants loaded from
+/mnt/storage/private/mrcieu/training/genetic_epidemiology/GenAssoc/data//chr16.bim.
+Note: No phenotype data present.
+Calculating allele frequencies... done.
+--hardy: Autosomal Hardy-Weinberg report (founders only) written to
+/user/home/mdxrg/scratch/genetic-epidemiology-practicals/GenAssoc/output/chr16_hwe.hardy
+.
+
+End time: Fri Jan 28 13:08:47 2022
