@@ -1,5 +1,5 @@
 # Change your working directory (you may need to change the filepath in next line)
-setwd("~/genetic-epidemiology-practicals/PolygenicScores/data")
+setwd("~/scratch/genetic-epidemiology-practicals/PolygenicScores/data")
 
 # Remove everything in R workspace
 rm(list=ls())
