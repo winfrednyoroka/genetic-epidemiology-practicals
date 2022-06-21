@@ -2,9 +2,9 @@
 
 module load apps/plink2
 
-cd ~/genetic-epidemiology-practicals/PolygenicScores/data
+cd ~/scratch/genetic-epidemiology-practicals/PolygenicScores/data
 
-DATADIR="/newshared/genetic.epidemiology/PolScore"
+DATADIR="/mnt/storage/private/mrcieu/training/genetic_epidemiology/PolScore"
 
 plink \
 	--bfile $DATADIR/data/ALSPAC_Clumped_SNPs \
