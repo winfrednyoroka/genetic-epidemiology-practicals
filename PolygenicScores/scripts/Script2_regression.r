@@ -2,7 +2,7 @@
 # Step 4: Testing if polygenic scores are associated with phenotype 
 ################################################################################################################
 # Change your working directory (you may need to change the filepath in next line)
-setwd("~/genetic-epidemiology-practicals/PolygenicScores/data")
+setwd("~/scratch/genetic-epidemiology-practicals/PolygenicScores/data")
 
 # removes anything already in memory
 rm(list=ls())
@@ -64,7 +64,7 @@ j=j+1
 all.results
 
 # To visualise the r2 of across all association analyses use:
-jpeg(file="~/genetic-epidemiology-practicals/PolygenicScores/results/bmi_sczPRS_r2_plot.jpeg")
+jpeg(file="~/scratch/genetic-epidemiology-practicals/PolygenicScores/results/bmi_sczPRS_r2_plot.jpeg")
 barplot(all.results$r2, ylim=c(0,0.02), ylab="BMI ~ standardised PRS (r2)", col="lightblue",
         xlab="Schizophrenia PRS p value thresholds", names.arg = all.results$PRS,
         main="r2 values for associations between SCZ PRS and BMI \nacross multiple PRS thresholds")
@@ -86,4 +86,4 @@ ggplot(all.results, aes(x = PRS, y = beta)) +
   xlab("Schizophrenia PRS p value thresholds") + 
   ylab("Unit change in BMI per s.d. increase in schziophrenia PRS") +
   ggtitle("Associations between SCZ PRS and BMI across multiple PRS thresholds")
-ggsave("~/genetic-epidemiology-practicals/PolygenicScores/results/bmi_scz_associations.jpeg")
+ggsave("~/scratch/genetic-epidemiology-practicals/PolygenicScores/results/bmi_scz_associations.jpeg")
