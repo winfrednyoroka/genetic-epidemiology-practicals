@@ -1,6 +1,7 @@
 rm(list=ls())
-setwd("~/MR_practical/")
+setwd("~/scratch/genetic-epidemiology-practicals/Mendelian_randomization")
 
+# Lines 6 to 10 not needed. All these packages should be already installed.
 # Packages needed for this practical 
 install.packages("plyr")
 install.packages("ggplot2")
