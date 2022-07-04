@@ -3,13 +3,11 @@ setwd("~/scratch/genetic-epidemiology-practicals/Mendelian_randomization")
 #setwd("~/genetic-epidemiology-practicals/Mendelian_randomization")
 
 #These packages have already been installed for you 
-#install.packages("plyr")
 #install.packages("ggplot2")
 #install.packages("remotes")
 #remotes::install_github("MRCIEU/TwoSampleMR")
 
 # Load packages
-library(plyr) #for the rbind.fill function
 library(ggplot2)
 library(TwoSampleMR)
 
