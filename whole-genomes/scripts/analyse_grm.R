@@ -13,7 +13,7 @@ readGRM <- function(rootname)
 	close(bin.file)
 	cat("Reading N\n")
 	n.file <- file(n.file.name, "rb")
-	N <- readBin(n.file, n=n*(n+1)/2, what=numeric(0), size=4)
+	#N <- readBin(n.file, n=n*(n+1)/2, what=numeric(0), size=4)
 	close(n.file)
 
 	cat("Creating data frame\n")
@@ -24,7 +24,8 @@ readGRM <- function(rootname)
 	}
 	col1 <- rep(1:n, 1:n)
 	col2 <- unlist(l)
-	grm <- data.frame(id1=col1, id2=col2, N=N, grm=grm)	
+	#grm <- data.frame(id1=col1, id2=col2, N=N, grm=grm)	
+	grm <- data.frame(id1=col1, id2=col2, grm=grm)	
 
 	ret <- list()
 	ret$grm <- grm

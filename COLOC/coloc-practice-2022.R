@@ -23,12 +23,12 @@
 #########################################################################################
 
 
-##install and call packages
+##install and call packages (these packages are already been installed for you)
 
-if (!requireNamespace("BiocManager", quietly = TRUE))
-  install.packages("BiocManager")
+#if (!requireNamespace("BiocManager", quietly = TRUE))
+#  install.packages("BiocManager")
 
-BiocManager::install("snpStats")
+#BiocManager::install("snpStats")
 
 
 #install.packages("coloc")
@@ -42,7 +42,7 @@ rm(list=ls(all=TRUE))
 
 #Set working directory to where the coloc input files are stored.
 #setwd("~/OneDrive - University of Bristol/Google_Drive/working_space/Post-doc-Bristol/Teaching/Genetic-epidemiology/2018/practice/COLOC")
-
+setwd("~/scratch/genetic-epidemiology-practicals/COLOC")
 ################## ANALYSIS 1: colocalization analysis of exposure level of CSF1 on years of schooling ##################
 ##coloc function for quantitative trait## 
 coloc.analysis.quant <- function(beta1,beta2,se1,se2,MAF1,MAF2,N1,N2){
@@ -76,7 +76,7 @@ coloc.analysis.quant <- function(beta1,beta2,se1,se2,MAF1,MAF2,N1,N2){
 }
 
 #call the input file
-input_file <- "CSF1-Schooling.pvalues.txt"
+input_file <- "CSF1-Schooling.txt"
 df <- read.table(input_file, header=T)
 df <- df[complete.cases(df), ]
 
@@ -127,7 +127,7 @@ coloc.analysis <- function(beta1,beta2,se1,se2,MAF1,MAF2,N1,N2,s){
 }
 
 #call the input file
-input_file <- "MUC16-Asthma.pvalues.txt"
+input_file <- "MUC16-Asthma.txt"
 df <- read.table(input_file, header=T)
 df <- df[complete.cases(df), ]
 
