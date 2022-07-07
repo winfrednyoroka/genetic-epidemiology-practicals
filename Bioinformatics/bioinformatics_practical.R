@@ -355,7 +355,8 @@ for (j in 1:length(dbs)) {
 
 endpoint = "/gene/druggability/ppi"
 params = list(gene_name = "HLA-DRB5")
-ppi_df = options(epigraphdb.api.url = "http://app-dc1-epigdb-p0.epi.bris.ac.uk:8065")
+options(epigraphdb.api.url = "http://app-dc1-epigdb-p0.epi.bris.ac.uk:8065")
+ppi_df = query_epigraphdb(route = endpoint, params = params, mode = "table")
 
 ppi_df
 
