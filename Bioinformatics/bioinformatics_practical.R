@@ -353,9 +353,11 @@ for (j in 1:length(dbs)) {
 ### 3.1.a Find alternative gene targets that interact with our candidate gene HLA-DRB5.
 ###
 
+# You only need to run this line if you are using BlueCrystal
+options(epigraphdb.api.url = "http://app-dc1-epigdb-p0.epi.bris.ac.uk:8065")
+
 endpoint = "/gene/druggability/ppi"
 params = list(gene_name = "HLA-DRB5")
-options(epigraphdb.api.url = "http://app-dc1-epigdb-p0.epi.bris.ac.uk:8065")
 ppi_df = query_epigraphdb(route = endpoint, params = params, mode = "table")
 
 ppi_df
