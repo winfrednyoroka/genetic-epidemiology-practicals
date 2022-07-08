@@ -1,0 +1,30 @@
+PLINK v1.90b4.1 64-bit (30 Mar 2017)
+Options in effect:
+  --bfile data/snp
+  --cluster
+  --mds-plot 2
+  --out output/plink
+  --read-genome output/plink.genome
+
+Hostname: bc4login1
+Working directory: /user/home/gx18744/tmp
+Start time: Fri Jul  8 16:50:02 2022
+
+Random number seed: 1657295402
+256956 MB RAM detected; reserving 128478 MB for main workspace.
+178232 variants loaded from .bim file.
+57 people (29 males, 28 females) loaded from .fam.
+Using 1 thread (no multithreaded calculations invoked).
+Before main variant filters, 0 founders and 57 nonfounders present.
+Calculating allele frequencies... done.
+Total genotyping rate is 0.959197.
+178232 variants and 57 people pass filters and QC.
+Note: No phenotypes present.
+Clustering... done.
+Cluster solution written to output/plink.cluster1 , output/plink.cluster2 , and
+output/plink.cluster3 .
+Performing multidimensional scaling analysis (SVD algorithm, 2
+dimensions)... done.
+MDS solution written to output/plink.mds .
+
+End time: Fri Jul  8 16:50:02 2022
