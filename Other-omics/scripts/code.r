@@ -1,22 +1,18 @@
 ## # eQTL and meQTL practical in R
 
-## Genetic Epidemiology Short Course<br>
-## March 2020<br>
-## <br>
-## School of Social and Community Medicine<br>
-## University of Bristol<br>
-## <br>
-## Created by Matthew Suderman<br>
+## Genetic Epidemiology Short Course
+## March 2020
+## University of Bristol
+## Created by Matthew Suderman
 ## [matthew.suderman@bristol.ac.uk](mailto:matthew.suderman@bristol.ac.uk)
 
-## ---
 
 ## ## Objectives
 
-## 1. Prepare the data for analysis.<br>
-## 2. Conduct an eQTL analysis.<br>
-## 3. Produce plots to visually inspect findings.<br>
-## 4. (Optional) Conduct an meQTL analysis.<br>
+## 1. Prepare the data for analysis.
+## 2. Conduct an eQTL analysis.
+## 3. Produce plots to visually inspect findings.
+## 4. (Optional) Conduct an meQTL analysis.
 ## 5. (Optional) Identify trios of associated genes, CpG sites and SNPs.
 
 ## ## Preliminaries
@@ -25,7 +21,7 @@
 
 ## Run the following command to access a compute node:
 ## ```
-## qsub -I -q teaching -l nodes=1:ppn=1,walltime=02:00:00
+## srun --nodes=1 --ntasks-per-node=1 --time=02:00:00 --reservation=SSCM026902 --account=SSCM026902 --pty bash -i
 ## ```
 
 ## All of the files for this practical
@@ -33,7 +29,7 @@
 
 ## Change to the directory in the repository set up for this practical:
 ## ```
-## cd ~/genetic-epidemiology-practicals/Other-omics
+## cd ~/scratch/genetic-epidemiology-practicals/Other-omics
 ## ```
 
 ## It is good practice to save outputs to another directory
@@ -67,21 +63,21 @@
 
 ## ## Analysis steps
 
-## 1. Preprocessing.<br>
-##    a. Population stratification.<br>
-##    b. Gene expression outliers.<br>
-##    c. Matching samples between datasets.<br>
+## 1. Preprocessing.
+##    a. Population stratification.
+##    b. Gene expression outliers.
+##    c. Matching samples between datasets.
 ##    d. Non-genetic variation removal.
-## 2. Software and data.<br>
-##    a. R package MatrixEQTL.<br>
-##    b. Genetic data.<br>
-##    c. Population stratification covariates.<br>
-##    d. Expression data.<br>
+## 2. Software and data.
+##    a. R package MatrixEQTL.
+##    b. Genetic data.
+##    c. Population stratification covariates.
+##    d. Expression data.
 ##    e. Gene and SNP locations.
 ## 3. eQTL analysis.
-## 4. Aftermath.<br>
-##    a. Number of associations.<br>
-##    b. Top associations.<br>
+## 4. Aftermath.
+##    a. Number of associations.
+##    b. Top associations.
 ##    c. Association plotting.
 ## 5. (Optional) meQTL analysis.
 ## 6. (Optional) Associated trios.
@@ -97,7 +93,7 @@
 ## We will use PLINK for these computations.
 ## Please ensure that PLINK is installed before continuing.
 ## ```
-## module add apps/plink2
+## module add apps/plink/1.90
 ## ```
 
 ## Calculate genetic distances:
@@ -125,19 +121,19 @@
 
 ## This generates a file `output/plink.mds` that looks something like this:
 ## ```
-##  FID       IID    SOL           C1           C2 
-##    1   GM02704      0  -0.00860421   -0.0114082 
-##    2   GM02706      0   -0.0145491    0.0005202 
-##    3   GM01650      0  -0.00431194  -0.00171059 
-##    4   GM01653      0  -0.00306369  -0.00175129 
-##    5   GM02640      0   -0.0035343  -0.00811608 
-##    6   GM02641      0  -0.00876442  -0.00616735 
+## FID       IID    SOL           C1           C2 
+##   1   GM02704      0   -0.0130015   0.00292188 
+##   2   GM02706      0   -0.0170637  -0.00899392 
+##   3   GM01650      0  -0.00689394 -0.000931319 
+##   4   GM01653      0   -0.0033092  -0.00831215 
+##   5   GM02640      0   -0.0058939  0.000331454 
+##   6   GM02641      0   -0.0109774  -0.00745736 
 ## ```
 
-## FID - Family ID;<br>
-## IID - Individual ID (or sample name);<br>
-## SOL - Assigned solution code;<br>
-## C1 - Position on first dimension;<br>
+## FID - Family ID;
+## IID - Individual ID (or sample name);
+## SOL - Assigned solution code;
+## C1 - Position on first dimension;
 ## C2 - Position on second dimension.
 
 ## ---
@@ -179,10 +175,10 @@ snp.mds[which(snp.mds[,"C1"] > 0.06 | snp.mds[,"C2"] > 0.06),]
 
 ## ```
 ##    FID    IID SOL         C1        C2
-## 39  39 WG2120   0 -0.0336041 0.0728445
-## 40  40 WG2121   0 -0.0323253 0.0719037
-## 43  43 WG1977   0  0.0725762 0.0344586
-## 44  44 WG1978   0  0.0713593 0.0332588
+## 37  37 WG2193   0 0.0465044  0.0844488
+## 38  38 WG2194   0 0.0290235  0.0612445
+## 43  43 WG1977   0 0.1492520 -0.0449629
+## 44  44 WG1978   0 0.1291590 -0.0357926
 ## ```
 
 ## Given how far these samples differ from the rest,
@@ -242,11 +238,11 @@ dev.off()
 
 ## ## 2a. Software and data: R package MatrixEQTL
 
-## If `MatrixEQTL` has not already been installed, we install it as follows:
+## If `MatrixEQTL` has not already been installed, we can install it as shown below. You don't need to do this in BlueCrystal
 
 ## ```r
-## BiocManager::install("MatrixEQTL")
-## # Respond by typing 'yes' to any questions.
+## # BiocManager::install("MatrixEQTL")
+## ### Respond by typing 'yes' to any questions.
 ## ```
 
 
@@ -440,7 +436,7 @@ nrow(eqtls)
 ## ```
 
 ## ```
-## ## [1] 468
+## ## [1] 511
 ## ```
 
 ## > *Question*: How many eQTLs did we identify?
@@ -452,7 +448,7 @@ length(unique(eqtls$snps))
 ## ```
 
 ## ```
-## ## [1] 403
+## ## [1] 447
 ## ```
 
 ## ---
@@ -468,7 +464,7 @@ eqtls[idx,]
 
 ## ```
 ## ##        snps         gene statistic       pvalue          FDR       beta
-## ## 1 rs1025996 ILMN_2100085 -21.33979 1.096262e-27 8.063919e-22 -0.4323303
+## ## 1 rs1025996 ILMN_2100085 -21.50283 7.630211e-28 5.885516e-22 -0.4303576
 ## ```
 
 ## We save the corresponding gene and SNP:
@@ -625,8 +621,7 @@ trios[idx,]
 
 ## ```
 ## ##          snp         gene eqtl.statistic        cpg meqtl.statistic
-## ## 5 rs10220917 ILMN_1656045       9.664163 cg25118879       -13.50116
+## ## 5 rs10220917 ILMN_1656045       8.82219 cg25118879       -11.67704
 ## ##        p.value
 ## ## 5 2.513491e-15
 ## ```
-
